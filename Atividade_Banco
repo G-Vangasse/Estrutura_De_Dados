@@ -1,0 +1,71 @@
+class ContaBancaria:
+    def __init__(self, numero, saldo_inicial):
+        self.numero = numero
+        self.saldo = saldo_inicial
+   
+    def depositar(self, valor):
+        self.saldo += valor
+   
+    def sacar(self, valor):
+        if self.saldo >= valor:
+            self.saldo -= valor
+        else:
+            print("Saldo insuficiente.")
+   
+    def imprimir_saldo(self):
+        print(f"Saldo da conta {self.numero}: R${self.saldo:.2f}")
+
+# Função para encontrar uma conta pelo número
+def encontrar_conta(contas, numero_conta):
+    for conta in contas:
+        if conta.numero == numero_conta:
+            return conta
+    return None
+
+# Lista para armazenar as contas
+contas = []
+
+# Loop interativo
+while True:
+    print("Opções:")
+    print("1. Iniciar conta")
+    print("2. Depositar")
+    print("3. Sacar")
+    print("4. Imprimir saldo")
+    print("5. Sair")
+   
+    opcao = int(input("Escolha uma opção: "))
+   
+    if opcao == 1:
+        numero_conta = int(input("Digite o número da conta: "))
+        saldo_inicial = float(input("Digite o saldo inicial: "))
+        nova_conta = ContaBancaria(numero_conta, saldo_inicial)
+        contas.append(nova_conta)
+    elif opcao == 2:
+        numero_conta = int(input("Digite o número da conta: "))
+        conta = encontrar_conta(contas, numero_conta)
+        if conta:
+            valor = float(input("Digite o valor a depositar: "))
+            conta.depositar(valor)
+        else:
+            print("Conta não encontrada.")
+    elif opcao == 3:
+        numero_conta = int(input("Digite o número da conta: "))
+        conta = encontrar_conta(contas, numero_conta)
+        if conta:
+            valor = float(input("Digite o valor a sacar: "))
+            conta.sacar(valor)
+        else:
+            print("Conta não encontrada.")
+    elif opcao == 4:
+        numero_conta = int(input("Digite o número da conta: "))
+        conta = encontrar_conta(contas, numero_conta)
+        if conta:
+            conta.imprimir_saldo()
+        else:
+            print("Conta não encontrada.")
+    elif opcao == 5:
+        print("Saindo do programa.")
+        break
+    else:
+        print("Opção inválida. Escolha novamente.")
